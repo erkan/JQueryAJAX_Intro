@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>JqsAJAXPHP</title>
+		<meta name="author" content="ERK" />
+		<!-- Date: 2012-10-28 -->
+		<script type="text/javascript"  src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script>
+			$(function(){
+				$('#frm').submit(function() {
+					
+					$.ajax(
+						{
+							type	: 	"GET",
+							url 	: 	"request.php",
+							data	:    {"uname":$('#uname').val()},
+							success : 	function(cevap){
+								
+								
+								$('#ajaxresponse div').fadeOut("fast", function(){
+								$('#ajaxresponse div').remove();
+									
+								$('#ajaxresponse').append($(cevap).hide().fadeIn());	
+								} );
+								
+							}
+							
+						}
+						
+					);
+					
+					return false;
+				});
+				
+				
+			});
+			
+			
+		</script>
+	</head>
+	<body>
+			<h1 id="title">Ajax With PHP</h1>
+			
+			<div class="content">
+				<p>
+					Get the full name from username.
+				</p>
+				<form id="frm" name="name">
+					<input type="text" name="uname" value="" id="uname"/>
+					<input type="submit"  value="Get full name" />
+					
+				</form>
+			</div>
+				<div id="ajaxresponse">
+					
+					
+				
+				
+				<div>Please submit the form</div>
+				
+				</div>
+	</body>
+</html>
+
