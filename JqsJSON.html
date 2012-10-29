@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>JqsAJAXPHP</title>
+		<meta name="author" content="ERK" />
+		<!-- Date: 2012-10-28 -->
+		<script type="text/javascript"  src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script>
+			var person={
+				"id"	: 13,
+				"fname" : "Tubis",
+				"lname" : "Sivri",
+				"email" : ["tubi@company.com","tubi@gmail.com"],
+				"permissions" : {
+					"guest": true,
+					"user" :true,
+					"admin":false,
+					
+				}
+				
+			};
+			
+			
+			
+			$(function(){
+				console.log(getPersonTemplate(person));
+				
+				$('#gettpl').click(function() {
+					$('.content').append(getPersonTemplate(person));
+				});
+				
+			});
+			
+			
+			function getPersonTemplate(p){
+				var o='<div class="person">'
+						+'<h2>'+p.fname+' '+p.lname+'</h2>'
+						+'<p><small>id: '+p.id+'</small></p>'
+						+'<h3>emails</h3>'
+						+'<ul>';
+						
+						for (var i=0;i<p.email.length;i++)
+							o+='<li>'+p.email[i]+'</li>';
+						
+						o+='</ul>';
+						o+='<h3>Permissions</h3>';
+						o+='<ul>';
+							if(p.permissions.admin)
+								o+='<li>Admin</li>';
+							if(p.permissions.user)
+								o+='<li>User</li>';
+							if(p.permissions.guest)
+								o+='<li>Guest</li>';	
+						
+						o+='</ul>';
+						
+					
+				o+='</div>';
+				return o;
+				
+			}
+			
+		</script>
+	</head>
+	<body>
+			<h1 id="title">Intro 2 JSON</h1>
+			<div class="content">
+				<p>
+					<a href="#" id="gettpl">Get Person Template</a>
+				</p>
+				
+			</div>
+			
+	</body>
+</html>
+
