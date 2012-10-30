@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>JqsAJAXPHP</title>
+		<meta name="author" content="ERK" />
+		<!-- Date: 2012-10-28 -->
+		<script type="text/javascript"  src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script>
+			
+			
+			
+			
+			
+			$(function(){
+				
+				
+				$('#frm').submit(function() {
+					
+					$.post("request2.php",
+							{
+								uname : $("#uname").val()
+							},
+								function(data){
+									
+									if(data==false)
+										var tpl = getEmptyTemplate();
+									
+									else
+										var tpl = getPersonTemplate(data);
+									
+									$('#ajaxresponse div').fadeOut("fast",function(){
+									$('#ajaxresponse div').remove();
+									$('#ajaxresponse').append($(tpl).fadeIn());	
+										
+									});
+									
+									//console.log(tpl);
+								},'json');
+								return false;
+					
+				});
+				
+			});
+			
+			function getEmptyTemplate(){
+				
+				return '<div class="box"><h2>User Not Found</h2></div>';
+				
+			}
+			
+			function getPersonTemplate(p){
+				var o='<div class="box">'
+						+'<h2>'+p.fname+' '+p.lname+'</h2>'
+						+'<p><small>id: '+p.id+'</small></p>'
+						+'<h3>emails</h3>'
+						+'<ul>';
+						
+						for (var i=0;i<p.email.length;i++)
+							o+='<li>'+p.email[i]+'</li>';
+						
+						o+='</ul>';
+						o+='<h3>Permissions</h3>';
+						o+='<ul>';
+							if(p.permissions.admin)
+								o+='<li>Admin</li>';
+							if(p.permissions.user)
+								o+='<li>User</li>';
+							if(p.permissions.guest)
+								o+='<li>Guest</li>';	
+						
+						o+='</ul>';
+						
+					
+				o+='</div>';
+				return o;
+				
+			}
+			
+		</script>
+		
+		<style type="text/css">
+	body 
+	{
+		font-family: arial, sans-serif;
+	}
+	.box 
+	{
+		margin: 0 0;
+		padding: 0 0;
+		border: 1px solid #555;
+		width: 240px;
+		background: #EAEAEA;
+	}
+		.box p , .box h2, .box h3
+		{
+			margin: 0 0;	
+		}
+		.box h2
+		{
+			background: #555;
+			color: #FFF;
+		}
+		.box ul
+		{
+			margin: 0 5px;
+		}	
+		
+</style>
+	</head>
+	<body>
+			<h1 id="title">PHP Classes with JSON</h1>
+			<div class="content">
+				<p>
+					Get the full name from username.
+				</p>
+				<form id="frm" name="name">
+					<input type="text" name="uname" value="" id="uname"/>
+					<input type="submit"  value="Get full name" />
+					
+				</form>
+			</div>
+				<div id="ajaxresponse">
+					
+					
+				
+				
+				<div>Please submit the form</div>
+				
+				</div>
+			
+	</body>
+</html>
+
